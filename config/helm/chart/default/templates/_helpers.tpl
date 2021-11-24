@@ -25,8 +25,8 @@ Common labels
 */}}
 {{- define "dynatrace-operator.labels" -}}
 helm.sh/chart: {{ include "dynatrace-operator.chart" . }}
-internal.dynatrace.com/component: operator
-dynatrace.com/operator: dynakube
+dynatrace: operator
+operator: dynakube
 {{ include "dynatrace-operator.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
@@ -58,6 +58,63 @@ Check if default image is used
 	{{- end -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Check if only 1 oneagent mode is used.
+*/}}
+{{- define "dynatrace-operator.modeSet" -}}
+	{{- $modes := list .Values.cloudNativeFullStack .Values.classicFullStack .Values.hostMonitoring .Values.applicationMonitoring -}}
+	{{- $enabled := dict -}}
+		{{- range $index, $mode := $modes -}}
+			{{- if $mode -}}
+			{{- if $mode.enabled -}}
+				{{- $_ := set $enabled ($index|toString) ($mode|toString) -}}
+			{{- end -}}
+			{{- end -}}
+		{{- end -}}
+		{{- if (lt (len (keys $enabled)) 2 ) -}}
+			{{- "set" -}}
+		{{- end -}}
+{{- end -}}
+
+
+{{/*
+Check if we need the csi driver.
+*/}}
+{{- define "dynatrace-operator.needCSI" -}}
+	{{- if .Values.cloudNativeFullStack -}}
+	  {{- if .Values.cloudNativeFullStack.enabled -}}
+		{{- printf "true" -}}
+	  {{- end -}}
+	{{- end -}}
+	{{- if .Values.applicationMonitoring -}}
+	  {{- if and .Values.applicationMonitoring.enabled .Values.applicationMonitoring.useCSIDriver -}}
+		{{- printf "true" -}}
+	  {{- end -}}
+	{{- end -}}
+{{- end -}}
+
+
+{{/*
+Check if the old and new activeGate sections are used at the same time.
+*/}}
+{{- define "dynatrace-operator.activeGateModeSet" -}}
+    {{- $enabled := dict -}}
+	{{- if .Values.activeGate }}
+	{{- if .Values.activeGate.capabilities }}
+	{{- if ge (len .Values.activeGate.capabilities) 1 }}
+		{{- $_ := set $enabled "new" "true" -}}
+	{{- end -}}
+	{{- end -}}
+	{{- end -}}
+	{{- if or .Values.kubernetesMonitoring.enabled .Values.routing.enabled }}
+		{{- $_ := set $enabled "old" "true" -}}
+	{{- end -}}
+	{{- if (lt (len (keys $enabled)) 2 ) -}}
+			{{- "set" -}}
+		{{- end -}}
+{{- end -}}
+
 
 {{/*
 Check if platform is set

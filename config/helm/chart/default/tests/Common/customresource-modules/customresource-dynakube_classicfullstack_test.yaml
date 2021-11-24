@@ -10,7 +10,7 @@ tests:
       classicFullStack.enabled: false
     asserts:
       - isNull:
-          path: spec.classicFullStack
+          path: spec.oneAgent
 
   - it: should exist if enabled
     set:
@@ -20,10 +20,49 @@ tests:
       classicFullStack.enabled: true
     asserts:
       - isNotNull:
-          path: spec.classicFullStack
+          path: spec.oneAgent.classicFullStack
+
+  - it: should set image
+    set:
+      apiUrl: test-url
+      apiToken: test-token
+      paasToken: test-token
+      classicFullStack.enabled: true
+      classicFullStack.image: "test"
+    asserts:
+      - isNotNull:
+          path: spec.oneAgent.classicFullStack
       - equal:
-          path: spec.classicFullStack.enabled
-          value: true
+          path: spec.oneAgent.classicFullStack.image
+          value: "test"
+
+  - it: should set version
+    set:
+      apiUrl: test-url
+      apiToken: test-token
+      paasToken: test-token
+      classicFullStack.enabled: true
+      classicFullStack.version: "v.1.2"
+    asserts:
+      - isNotNull:
+          path: spec.oneAgent.classicFullStack
+      - equal:
+          path: spec.oneAgent.classicFullStack.version
+          value: "v.1.2"
+
+  - it: should set autoUpdate
+    set:
+      apiUrl: test-url
+      apiToken: test-token
+      paasToken: test-token
+      classicFullStack.enabled: true
+      classicFullStack.autoUpdate: false
+    asserts:
+      - isNotNull:
+          path: spec.oneAgent.classicFullStack
+      - equal:
+          path: spec.oneAgent.classicFullStack.autoUpdate
+          value: false
 
   - it: should set nodeSelectors
     set:
@@ -36,9 +75,9 @@ tests:
           disktype: ssd
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.nodeSelector
+          path: spec.oneAgent.classicFullStack.nodeSelector
       - equal:
-          path: spec.classicFullStack.nodeSelector.disktype
+          path: spec.oneAgent.classicFullStack.nodeSelector.disktype
           value: ssd
 
   - it: should set tolerations
@@ -54,23 +93,23 @@ tests:
             operator: Exists
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.tolerations
+          path: spec.oneAgent.classicFullStack.tolerations
       - contains:
-          path: spec.classicFullStack.tolerations
+          path: spec.oneAgent.classicFullStack.tolerations
           content:
             effect: NoSchedule
             key: node-role.kubernetes.io/master
             operator: Exists
           count: 1
 
-  - it: should set resources
+  - it: should set oneAgentResources
     set:
       apiUrl: test-api-url
       apiToken: test-api-token
       paasToken: test-paas-token
       classicFullStack:
         enabled: true
-        resources:
+        oneAgentResources:
           requests:
             cpu: 100m
             memory: 512Mi
@@ -79,22 +118,22 @@ tests:
             memory: 1Gi
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.resources
+          path: spec.oneAgent.classicFullStack.oneAgentResources
       - isNotNull:
-          path: spec.classicFullStack.resources.requests
+          path: spec.oneAgent.classicFullStack.oneAgentResources.requests
       - isNotNull:
-          path: spec.classicFullStack.resources.limits
+          path: spec.oneAgent.classicFullStack.oneAgentResources.limits
       - equal:
-          path: spec.classicFullStack.resources.requests.cpu
+          path: spec.oneAgent.classicFullStack.oneAgentResources.requests.cpu
           value: 100m
       - equal:
-          path: spec.classicFullStack.resources.requests.memory
+          path: spec.oneAgent.classicFullStack.oneAgentResources.requests.memory
           value: 512Mi
       - equal:
-          path: spec.classicFullStack.resources.limits.cpu
+          path: spec.oneAgent.classicFullStack.oneAgentResources.limits.cpu
           value: 150m
       - equal:
-          path: spec.classicFullStack.resources.limits.memory
+          path: spec.oneAgent.classicFullStack.oneAgentResources.limits.memory
           value: 1Gi
 
   - it: should set args
@@ -102,15 +141,16 @@ tests:
       apiUrl: test-api-url
       apiToken: test-api-token
       paasToken: test-paas-token
+      cloudNativeFullStack.enabled: false
       classicFullStack:
         enabled: true
         args:
           test-arg: test-value
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.args
+          path: spec.oneAgent.classicFullStack.args
       - equal:
-          path: spec.classicFullStack.args.test-arg
+          path: spec.oneAgent.classicFullStack.args.test-arg
           value: test-value
 
   - it: should set envs
@@ -124,9 +164,9 @@ tests:
           test-env: test-value
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.env
+          path: spec.oneAgent.classicFullStack.env
       - equal:
-          path: spec.classicFullStack.env.test-env
+          path: spec.oneAgent.classicFullStack.env.test-env
           value: test-value
 
   - it: should set priorityClassName
@@ -139,7 +179,7 @@ tests:
         priorityClassName: test-priority-class
     asserts:
       - equal:
-          path: spec.classicFullStack.priorityClassName
+          path: spec.oneAgent.classicFullStack.priorityClassName
           value: test-priority-class
 
   - it: should set dnsPolicy
@@ -152,24 +192,8 @@ tests:
         dnsPolicy: test-dns-policy
     asserts:
       - equal:
-          path: spec.classicFullStack.dnsPolicy
+          path: spec.oneAgent.classicFullStack.dnsPolicy
           value: test-dns-policy
-
-
-  - it: should set service account name
-    set:
-      apiUrl: test-api-url
-      apiToken: test-api-token
-      paasToken: test-paas-token
-      classicFullStack:
-        enabled: true
-        serviceAccountName: test-service-account
-    asserts:
-      - isNotNull:
-          path: spec.classicFullStack.serviceAccountName
-      - equal:
-          path: spec.classicFullStack.serviceAccountName
-          value: test-service-account
 
   - it: should set labels
     set:
@@ -182,33 +206,7 @@ tests:
           test-label: test-value
     asserts:
       - isNotNull:
-          path: spec.classicFullStack.labels
+          path: spec.oneAgent.classicFullStack.labels
       - equal:
-          path: spec.classicFullStack.labels.test-label
+          path: spec.oneAgent.classicFullStack.labels.test-label
           value: test-value
-
-  - it: should set useUnprivilegedMode
-    set:
-      apiUrl: test-api-url
-      apiToken: test-api-token
-      paasToken: test-paas-token
-      classicFullStack:
-        enabled: true
-        useUnprivilegedMode: true
-    asserts:
-      - equal:
-          path: spec.classicFullStack.useUnprivilegedMode
-          value: true
-
-  - it: should set useImmutableImage
-    set:
-      apiUrl: test-api-url
-      apiToken: test-api-token
-      paasToken: test-paas-token
-      classicFullStack:
-        enabled: true
-        useImmutableImage: true
-    asserts:
-      - equal:
-          path: spec.classicFullStack.useImmutableImage
-          value: true

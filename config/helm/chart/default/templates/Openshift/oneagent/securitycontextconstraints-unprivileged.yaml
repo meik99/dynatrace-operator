@@ -1,6 +1,4 @@
-{{- $platformIsSet := printf "%s" (required "Platform needs to be set to kubernetes, openshift or openshift-3-11" (include "dynatrace-operator.platformSet" .))}}
-{{- if and (eq .Values.platform "openshift") (.Values.createSecurityContextConstraints) }}
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+{{- $platformIsSet := printf "%s" (required "Platform needs to be set to kubernetes, openshift or openshift-3-11" (include "dynatrace-operator.platformSet" .))}}
+{{- if and (eq .Values.platform "openshift") (.Values.createSecurityContextConstraints) }}
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   annotations:
     kubernetes.io/description: "dynatrace-dynakube-oneagent-unprivileged allows access to all privileged and host features and the ability to run as any user, any group, any fsGroup, and with any SELinux context. This is a copy of privileged scc."
   name: dynatrace-dynakube-oneagent-unprivileged
-  labels:
-  {{- include "dynatrace-operator.labels" . | nindent 4 }}
 allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true
@@ -61,7 +59,7 @@ seccompProfiles:
 supplementalGroups:
   type: RunAsAny
 users:
-  - system:serviceaccount:dynatrace:dynatrace-dynakube-oneagent-unprivileged
+  - system:serviceaccount:{{ .Release.Namespace }}:dynatrace-dynakube-oneagent-unprivileged
 volumes:
   - "*"
 {{ end }}

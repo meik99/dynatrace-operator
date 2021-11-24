@@ -30,7 +30,7 @@ tests:
                 internal.dynatrace.com/component: webhook
                 internal.dynatrace.com/app: webhook
             strategy:
-              type: Recreate
+              type: RollingUpdate
             template:
               metadata:
                 annotations:
@@ -44,16 +44,6 @@ tests:
                   nodeAffinity:
                     requiredDuringSchedulingIgnoredDuringExecution:
                       nodeSelectorTerms:
-                        - matchExpressions:
-                            - key: beta.kubernetes.io/arch
-                              operator: In
-                              values:
-                                - amd64
-                                - arm64
-                            - key: beta.kubernetes.io/os
-                              operator: In
-                              values:
-                                - linux
                         - matchExpressions:
                             - key: kubernetes.io/arch
                               operator: In
@@ -84,20 +74,20 @@ tests:
                         path: /healthz
                         port: server-port
                         scheme: HTTPS
-                      initialDelaySeconds: 60
-                      periodSeconds: 10
                     ports:
-                      - name: metrics
-                        containerPort: 8383
-                      - name: server-port
-                        containerPort: 8443
+                    - name: metrics
+                      containerPort: 8383
+                    - name: validation
+                      containerPort: 8384
+                    - name: server-port
+                      containerPort: 8443
                     resources:
                       requests:
                         cpu: 300m
                         memory: 128Mi
                       limits:
-                        cpu: 600m
-                        memory: 256Mi
+                        cpu: 300m
+                        memory: 128Mi
                 serviceAccountName: dynatrace-webhook
 
   - it: should have imagePullSecrets defined in spec

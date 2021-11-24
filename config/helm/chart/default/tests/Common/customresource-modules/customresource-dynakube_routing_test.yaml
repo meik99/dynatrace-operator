@@ -48,6 +48,23 @@ tests:
       - isNull:
           path: spec.routing.customProperties
 
+  - it: should set image if set
+    set:
+      apiUrl: test-api-url
+      apiToken: test-api-token
+      paasToken: test-paas-token
+      routing:
+        enabled: true
+        image: test-image
+    asserts:
+      - isNotNull:
+          path: spec.routing
+      - isNotNull:
+          path: spec.routing.image
+      - equal:
+          path: spec.routing.image
+          value: test-image
+
   - it: should manipulate routing replicas if set and enabled
     set:
       apiUrl: test-api-url
@@ -221,22 +238,6 @@ tests:
           path: spec.routing.labels.test-label
           value: test-value
 
-  - it: "should add routing args if set and enabled"
-    set:
-      apiUrl: test-api-url
-      apiToken: test-api-token
-      paasToken: test-paas-token
-      routing:
-        enabled: true
-        args:
-          test-arg: test-value
-    asserts:
-      - isNotNull:
-          path: spec.routing.args
-      - equal:
-          path: spec.routing.args.test-arg
-          value: test-value
-
   - it: "should add routing env if set and enabled"
     set:
       apiUrl: test-api-url
@@ -252,19 +253,4 @@ tests:
       - equal:
           path: spec.routing.env.test-env
           value: test-value
-
-  - it: "should add routing serviceAccountName if set and enabled"
-    set:
-      apiUrl: test-api-url
-      apiToken: test-api-token
-      paasToken: test-paas-token
-      routing:
-        enabled: true
-        serviceAccountName: test-service-account
-    asserts:
-      - isNotNull:
-          path: spec.routing.serviceAccountName
-      - equal:
-          path: spec.routing.serviceAccountName
-          value: test-service-account
 
