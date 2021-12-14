@@ -29,7 +29,7 @@ enableIstio: false
 # Only works for applicationMonitoring and cloudNativeFullStack
 namespaceSelector: {}
 
-autoCreateSecret: true
+autoCreateSecret: false
 apiToken: ""
 paasToken: ""
 
