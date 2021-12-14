@@ -1,4 +1,27 @@
 ---
+# Source: dynatrace-operator/templates/Common/activegate/serviceaccount-activegate.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-activegate
+  namespace: dynatrace
+  labels:
+    dynatrace: operator
+    operator: dynakube
+---
 # Source: dynatrace-operator/templates/Common/data-ingest/serviceaccount-data-ingest.yaml
 # Copyright 2021 Dynatrace LLC
 
@@ -19,11 +42,11 @@ metadata:
   name: dynatrace-data-ingest
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 ---
 # Source: dynatrace-operator/templates/Common/kubernetes-monitoring/serviceaccount-kubernetes-monitoring.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -42,11 +65,104 @@ metadata:
   name: dynatrace-kubernetes-monitoring
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
+---
+# Source: dynatrace-operator/templates/Common/oneagent/serviceaccount-oneagent-unprivileged.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-dynakube-oneagent-unprivileged
+  namespace: dynatrace
+  labels:
+    
+    dynatrace: operator
+    operator: dynakube
+
+
+imagePullSecrets:
+- name: redhat-connect
+- name: redhat-connect-sso
+---
+# Source: dynatrace-operator/templates/Common/oneagent/serviceaccount-oneagent.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-dynakube-oneagent
+  namespace: dynatrace
+  labels:
+    
+    dynatrace: operator
+    operator: dynakube
+
+
+imagePullSecrets:
+- name: redhat-connect
+- name: redhat-connect-sso
+---
+# Source: dynatrace-operator/templates/Common/operator/serviceaccount-operator.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dynatrace-operator
+  namespace: dynatrace
+  labels:
+    
+    dynatrace: operator
+    operator: dynakube
+    
+
+imagePullSecrets:
+- name: redhat-connect
+- name: redhat-connect-sso
 ---
 # Source: dynatrace-operator/templates/Common/routing/serviceaccount-routing.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -65,8 +181,8 @@ metadata:
   name: dynatrace-routing
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 ---
 # Source: dynatrace-operator/templates/Openshift-3.11/oneagent/serviceaccount-oneagent-unprivileged.yaml
 # Copyright 2020 Dynatrace LLC
@@ -89,8 +205,8 @@ metadata:
   name: dynatrace-dynakube-oneagent-unprivileged
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 imagePullSecrets:
   - name: redhat-connect
   - name: redhat-connect-sso
@@ -116,8 +232,8 @@ metadata:
   name: dynatrace-dynakube-oneagent
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 imagePullSecrets:
   - name: redhat-connect
   - name: redhat-connect-sso
@@ -143,14 +259,14 @@ metadata:
   name: dynatrace-operator
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 imagePullSecrets:
   - name: redhat-connect
   - name: redhat-connect-sso
 ---
 # Source: dynatrace-operator/templates/Common/kubernetes-monitoring/clusterrole-kubernetes-monitoring.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -168,8 +284,8 @@ kind: ClusterRole
 metadata:
   name: dynatrace-kubernetes-monitoring
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 rules:
   - apiGroups:
       - ""
@@ -207,6 +323,69 @@ rules:
     verbs:
       - get
 ---
+# Source: dynatrace-operator/templates/Common/operator/clusterrole-operator.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dynatrace-operator
+  labels:
+    dynatrace: operator
+    operator: dynakube
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    resourceNames:
+      - dynatrace-dynakube-config
+    verbs:
+      - get
+      - update
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
 # Source: dynatrace-operator/templates/Openshift-3.11/operator/clusterrole-operator.yaml
 # Copyright 2020 Dynatrace LLC
 
@@ -227,8 +406,8 @@ kind: ClusterRole
 metadata:
   name: dynatrace-operator
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 rules:
   - apiGroups:
       - ""  # "" indicates the core API group
@@ -264,7 +443,7 @@ rules:
       - patch
 ---
 # Source: dynatrace-operator/templates/Common/kubernetes-monitoring/clusterrolebinding-kubernetes-monitoring.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -282,8 +461,8 @@ kind: ClusterRoleBinding
 metadata:
   name: dynatrace-kubernetes-monitoring
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -294,7 +473,7 @@ subjects:
     namespace: dynatrace
 ---
 # Source: dynatrace-operator/templates/Common/operator/clusterrolebinding-operator.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -312,8 +491,8 @@ kind: ClusterRoleBinding
 metadata:
   name: dynatrace-operator
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 subjects:
   - kind: ServiceAccount
     name: dynatrace-operator
@@ -324,7 +503,7 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
 ---
 # Source: dynatrace-operator/templates/Common/operator/role-operator.yaml
-# Copyright 2019 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -343,8 +522,8 @@ metadata:
   name: dynatrace-operator
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 rules:
   - apiGroups:
       - dynatrace.com
@@ -356,7 +535,6 @@ rules:
       - watch
       - update
       - create
-
   - apiGroups:
       - dynatrace.com
     resources:
@@ -376,7 +554,6 @@ rules:
       - create
       - update
       - delete
-
   - apiGroups:
       - apps
     resources:
@@ -388,7 +565,6 @@ rules:
       - create
       - update
       - delete
-
   - apiGroups:
       - apps
     resources:
@@ -416,7 +592,6 @@ rules:
       - create
       - update
       - delete
-
   - apiGroups:
       - ""  # "" indicates the core API group
     resources:
@@ -427,7 +602,6 @@ rules:
       - watch
       - delete
       - create
-
   - apiGroups:
       - ""  # "" indicates the core API group
     resources:
@@ -438,7 +612,6 @@ rules:
       - watch
       - create
       - update
-
   - apiGroups:
       - ""
     resources:
@@ -446,7 +619,6 @@ rules:
     verbs:
       - list
       - create
-
   - apiGroups:
       - ""
     resources:
@@ -488,7 +660,7 @@ rules:
       - create
 ---
 # Source: dynatrace-operator/templates/Common/operator/rolebinding-operator.yaml
-# Copyright 2020 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -507,8 +679,8 @@ metadata:
   name: dynatrace-operator
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 subjects:
   - kind: ServiceAccount
     name: dynatrace-operator
@@ -516,6 +688,108 @@ roleRef:
   kind: Role
   name: dynatrace-operator
   apiGroup: rbac.authorization.k8s.io
+---
+# Source: dynatrace-operator/templates/Common/operator/deployment-operator.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dynatrace-operator
+  namespace: dynatrace
+  labels:
+    dynatrace: operator
+    operator: dynakube
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      name: dynatrace-operator
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: dynatrace-operator
+        dynatrace: operator
+        operator: dynakube
+    spec:
+      containers:
+        - name: dynatrace-operator
+          args:
+            - operator
+          # Replace this with the built image name
+          image:
+            docker.io/dynatrace/dynatrace-operator:v0.2.1
+          imagePullPolicy: Always
+          env:
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            
+            - name: RELATED_IMAGE_DYNATRACE_ONEAGENT
+              value: registry.connect.redhat.com/dynatrace/oneagent
+            
+          ports:
+            - containerPort: 8080
+              name: metrics
+            - containerPort: 10080
+              name: server-port
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 100m
+              memory: 128Mi
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: server-port
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: server-port
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            
+              - matchExpressions:
+                  - key: beta.kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
+                      - arm64
+                  - key: beta.kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+            
+      serviceAccountName: dynatrace-operator
 ---
 # Source: dynatrace-operator/templates/Openshift-3.11/operator/deployment-operator.yaml
 # Copyright 2020 Dynatrace LLC
@@ -538,8 +812,8 @@ metadata:
   name: dynatrace-operator
   namespace: dynatrace
   labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
+    dynatrace: operator
+    operator: dynakube
 spec:
   replicas: 1
   revisionHistoryLimit: 1
@@ -552,8 +826,8 @@ spec:
     metadata:
       labels:
         name: dynatrace-operator
-        internal.dynatrace.com/component: operator
-        dynatrace.com/operator: dynakube
+        dynatrace: operator
+        operator: dynakube
     spec:
       containers:
         - name: dynatrace-operator
@@ -561,7 +835,7 @@ spec:
             - operator
           # Replace this with the built image name
           image:
-            quay.io/dynatrace/dynatrace-operator:snapshot
+            docker.io/dynatrace/dynatrace-operator:v0.2.1
           imagePullPolicy: Always
           env:
             - name: POD_NAMESPACE
@@ -628,8 +902,8 @@ spec:
                       - linux
       serviceAccountName: dynatrace-operator
 ---
-# Source: dynatrace-operator/templates/Openshift-3.11/oneagent/securitycontextconstraints-unprivileged.yaml
-# Copyright 2020 Dynatrace LLC
+# Source: dynatrace-operator/templates/Common/configmap.yaml
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -642,16 +916,415 @@ spec:
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/clusterrole-csi.yaml
+# Copyright 2021 Dynatrace LLC
 
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/clusterrolebinding-csi.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/csidriver.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/daemonset.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/role-csi.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/rolebinding-csi.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/csi/serviceaccount-csi.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/customresource-dynakube.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/secret.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/clusterrole-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/clusterrolebinding-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/deployment-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/mutatingwebhookconfiguration.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/role-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/rolebinding-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/service.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/serviceaccount-webhook.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Common/webhook/validatingwebhookconfiguration.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/csi/securitycontextconstraints-csidriver.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/clusterrole-oneagent-unprivileged.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/clusterrole-oneagent.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/clusterrolebinding-oneagent-unprivileged.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/clusterrolebinding-oneagent.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/securitycontextconstraints-unprivileged.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift/oneagent/securitycontextconstraints.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/application.yaml
+# Copyright 2020 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#     http://www.apache.org/licenses/LICENSE-2.0
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Source: dynatrace-operator/templates/Openshift-3.11/oneagent/securitycontextconstraints-unprivileged.yaml
+# Copyright 2021 Dynatrace LLC
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   annotations:
     kubernetes.io/description: "dynatrace-dynakube-oneagent-unprivileged allows access to all privileged and host features and the ability to run as any user, any group, any fsGroup, and with any SELinux context. This is a copy of privileged scc."
   name: dynatrace-dynakube-oneagent-unprivileged
-  labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
 allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true
@@ -696,7 +1369,7 @@ volumes:
   - "*"
 ---
 # Source: dynatrace-operator/templates/Openshift-3.11/oneagent/securitycontextconstraints.yaml
-# Copyright 2019 Dynatrace LLC
+# Copyright 2021 Dynatrace LLC
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -709,16 +1382,12 @@ volumes:
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   annotations:
     kubernetes.io/description: "dynatrace-dynakube-oneagent-privileged allows access to all privileged and host features and the ability to run as any user, any group, any fsGroup, and with any SELinux context. This is a copy of privileged scc."
   name: dynatrace-dynakube-oneagent-privileged
-  labels:
-    internal.dynatrace.com/component: operator
-    dynatrace.com/operator: dynakube
 allowHostDirVolumePlugin: true
 allowHostIPC: false
 allowHostNetwork: true

@@ -14,7 +14,7 @@ spec:
           namespace: dynatrace
           path: /convert
       conversionReviewVersions:
-      - v1
+      - v1beta1
   group: dynatrace.com
   names:
     categories:
@@ -23,6 +23,7 @@ spec:
     listKind: DynaKubeList
     plural: dynakubes
     singular: dynakube
+  preserveUnknownFields: false
   scope: Namespaced
   versions:
   - additionalPrinterColumns:
