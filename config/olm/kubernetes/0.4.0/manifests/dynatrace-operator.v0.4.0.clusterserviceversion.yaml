@@ -6,7 +6,7 @@ metadata:
     capabilities: Deep Insights
     categories: Monitoring,Logging & Tracing
     containerImage: registry.connect.redhat.com/dynatrace/dynatrace-operator:v0.4.0
-    createdAt: '2022-01-04T10:04:55.085342'
+    createdAt: '2022-01-04T12:04:05.276736'
     operators.operatorframework.io/builder: operator-sdk-v1.12.0+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
     repository: https://github.com/Dynatrace/dynatrace-operator
@@ -108,13 +108,13 @@ spec:
       deployments: []
     strategy: deployment
   installModes:
-  - supported: true
+  - supported: false
     type: OwnNamespace
   - supported: false
     type: SingleNamespace
   - supported: false
     type: MultiNamespace
-  - supported: false
+  - supported: true
     type: AllNamespaces
   keywords:
   - monitoring
