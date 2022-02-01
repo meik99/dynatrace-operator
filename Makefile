@@ -111,6 +111,7 @@ manifests: controller-gen kustomize
 	mkdir -p config/deploy/kubernetes
 	mkdir -p config/deploy/openshift
 
+ifeq ($(PLATFORM), kubernetes)
 	# Generate kubernetes.yaml
 	helm template dynatrace-operator config/helm/chart/default \
 		--namespace dynatrace \
@@ -135,7 +136,8 @@ manifests: controller-gen kustomize
 	grep -v 'app.kubernetes.io' config/deploy/kubernetes/kubernetes-csi.yaml > config/deploy/kubernetes/tmp.yaml
 	grep -v 'helm.sh' config/deploy/kubernetes/tmp.yaml > config/deploy/kubernetes/kubernetes-csi.yaml
 	rm config/deploy/kubernetes/tmp.yaml
-
+endif
+ifeq ($(PLATFORM), openshift)
 	# Generate openshift.yaml
 	helm template dynatrace-operator config/helm/chart/default \
 		--namespace dynatrace \
@@ -162,7 +164,7 @@ manifests: controller-gen kustomize
 	grep -v 'app.kubernetes.io' config/deploy/openshift/openshift-csi.yaml > config/deploy/openshift/tmp.yaml
 	grep -v 'helm.sh' config/deploy/openshift/tmp.yaml > config/deploy/openshift/openshift-csi.yaml
 	rm config/deploy/openshift/tmp.yaml
-
+endif
 	$(KUSTOMIZE) build config/crd | cat - config/deploy/kubernetes/kubernetes.yaml > temp
 	mv temp config/deploy/kubernetes/kubernetes.yaml
 
