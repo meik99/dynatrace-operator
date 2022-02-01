@@ -16,7 +16,7 @@ metadata:
     capabilities: Deep Insights
     categories: Monitoring,Logging & Tracing
     containerImage: registry.connect.redhat.com/dynatrace/dynatrace-operator:v0.5.0
-    createdAt: '2022-02-01T06:06:04.641848'
+    createdAt: '2022-02-01T09:56:48.356867'
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
     repository: https://github.com/Dynatrace/dynatrace-operator
@@ -873,7 +873,7 @@ spec:
                       fieldPath: metadata.name
                 - name: DEPLOYED_VIA_OLM
                   value: 'true'
-                image: quay.io/dynatrace/dynatrace-operator:v0.5.0
+                image: registry.connect.redhat.com/dynatrace/dynatrace-operator:v0.5.0
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -951,7 +951,7 @@ spec:
                       fieldPath: metadata.name
                 - name: DEPLOYED_VIA_OLM
                   value: 'true'
-                image: quay.io/dynatrace/dynatrace-operator:v0.5.0
+                image: registry.connect.redhat.com/dynatrace/dynatrace-operator:v0.5.0
                 imagePullPolicy: Always
                 name: webhook
                 ports:
