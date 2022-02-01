@@ -9,8 +9,8 @@ PLATFORM ?= openshift
 # Default bundle image tag
 BUNDLE_IMG ?= controller-bundle:$(VERSION)
 
-MASTER_IMAGE = quay.io/dynatrace/dynatrace-operator:snapshot
-BRANCH_IMAGE = quay.io/dynatrace/dynatrace-operator:snapshot-$(shell git branch --show-current | sed "s/[^a-zA-Z0-9_-]/-/g")
+MASTER_IMAGE ?= quay.io/dynatrace/dynatrace-operator:snapshot
+BRANCH_IMAGE ?= quay.io/dynatrace/dynatrace-operator:snapshot-$(shell git branch --show-current | sed "s/[^a-zA-Z0-9_-]/-/g")
 OLM_IMAGE ?= registry.connect.redhat.com/dynatrace/dynatrace-operator:v${VERSION}
 
 OUT ?= all
