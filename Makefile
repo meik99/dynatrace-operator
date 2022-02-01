@@ -249,7 +249,7 @@ bundle: export OLM=true
 bundle: export OUT=olm
 bundle: manifests kustomize
 	operator-sdk generate kustomize manifests -q
-	cd config/deploy/$(PLATFORM) && $(KUSTOMIZE) edit set image "quay.io/dynatrace/dynatrace-operator:snapshot"=$(OLM_IMAGE)
+	cd config/deploy/$(PLATFORM) && $(KUSTOMIZE) edit set image "quay.io/dynatrace/dynatrace-operator:snapshot"=$(OLM_IMAGE) && $(KUSTOMIZE) edit set containerImage "registry.connect.redhat.com/dynatrace/dynatrace-operator"=$(OLM_IMAGE)
 	$(KUSTOMIZE) build config/olm/$(PLATFORM) | operator-sdk generate bundle --overwrite --version $(VERSION) $(SERVICE_ACCOUNTS) $(BUNDLE_METADATA_OPTS)
 	make OUT=all reset-kustomization-files
 	operator-sdk bundle validate ./bundle
